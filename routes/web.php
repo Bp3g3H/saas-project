@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FeatureOneController;
+use App\Http\Controllers\FeatureTwoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +20,18 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/featureOne.index', [FeatureOneController::class, 'index'])->name('featureOne.index');
+    Route::get('/featureTwo.index', [FeatureTwoController::class, 'index'])->name('featureTwo.index');
+
+    Route::post('/featureOne.calculate', [FeatureOneController::class, 'calculate'])->name('featureOne.calculate');
+    Route::post('/featureTwo.calculate', [FeatureTwoController::class, 'calculate'])->name('featureTwo.calculate');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
