@@ -37,7 +37,7 @@ export default function Authenticated({ user, header, children }) {
                             <span className='text-white flex gap-3'>
                                 {user.available_credits} Credits
                             </span>
-                            <Link href="/" className='text-white py-1 px-3 rounded border translation-colors hover:text-gray-800 hover:bg-white'>
+                            <Link href={route('credit.index')} className='text-white py-1 px-3 rounded border translation-colors hover:text-gray-800 hover:bg-white'>
                                 Get More
                             </Link>
                             <div className="ms-3 relative">

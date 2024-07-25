@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreditController;
 use App\Http\Controllers\FeatureOneController;
 use App\Http\Controllers\FeatureTwoController;
 use App\Http\Controllers\ProfileController;
@@ -20,12 +21,19 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/featureOne.index', [FeatureOneController::class, 'index'])->name('featureOne.index');
-    Route::get('/featureTwo.index', [FeatureTwoController::class, 'index'])->name('featureTwo.index');
+Route::post('/buy-credits/webhook', [CreditController::class, 'webhook'])->name('credit.webhook');
 
-    Route::post('/featureOne.calculate', [FeatureOneController::class, 'calculate'])->name('featureOne.calculate');
-    Route::post('/featureTwo.calculate', [FeatureTwoController::class, 'calculate'])->name('featureTwo.calculate');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/featureOne', [FeatureOneController::class, 'index'])->name('featureOne.index');
+    Route::get('/featureTwo', [FeatureTwoController::class, 'index'])->name('featureTwo.index');
+
+    Route::post('/featureOne', [FeatureOneController::class, 'calculate'])->name('featureOne.calculate');
+    Route::post('/featureTwo', [FeatureTwoController::class, 'calculate'])->name('featureTwo.calculate');
+
+    Route::get('/buy-credits', [CreditController::class, 'index'])->name('credit.index');
+    Route::get('/buy-credits/success', [CreditController::class, 'success'])->name('credit.success');
+    Route::get('/buy-credits/cancel', [CreditController::class, 'cancel'])->name('credit.cancel');
+    Route::post('/buy-credits/{package}', [CreditController::class, 'buyCredits'])->name('credit.buy');
 });
 
 Route::middleware('auth')->group(function () {
