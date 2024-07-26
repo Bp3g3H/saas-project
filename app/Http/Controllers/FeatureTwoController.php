@@ -14,7 +14,7 @@ class FeatureTwoController extends Controller
 
     public function __construct()
     {
-        $this->feature = Feature::query()->where('route_name', 'feature2.index')->where('active', true)->firstOrFail();
+        $this->feature = Feature::query()->where('route_name', 'featureTwo.index')->where('active', true)->firstOrFail();
     }
 
     public function index()

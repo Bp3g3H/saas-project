@@ -13,7 +13,7 @@ class FeatureOneController extends Controller
 
     public function __construct()
     {
-        $this->feature = Feature::query()->where('route_name', 'feature1.index')->where('active', true)->firstOrFail();
+        $this->feature = Feature::query()->where('route_name', 'featureOne.index')->where('active', true)->firstOrFail();
     }
 
     public function index()
